@@ -1,0 +1,31 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig.json",
+    "compilerOptions": {
+        "lib": ["ESNext", "DOM"],
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "outDir": "dist",
+        "declarationDir": "dist",
+        "rootDir": ".",
+        "declaration": true,
+        "emitDeclarationOnly": false,
+        "strict": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "removeComments": true,
+        "forceConsistentCasingInFileNames": true,
+        "types": ["bun"],
+        "paths": {
+            "#env/createWebSocket": ["./src/env/node/createWebSocket.shim.ts"],
+            "#env/DataLoader": ["./src/env/node/DataLoader.shim.ts"],
+            "#env/fetch": ["./src/env/node/fetch.shim.ts"],
+            "#env/env": ["./src/env/node/env.shim.ts"],
+            "#env/loadMap": ["./src/env/node/loadMap.shim.ts"],
+            "#env/loginWithGoogle": ["./src/env/node/loginWithGoogle.shim.ts"],
+            "#env/processJS": ["./src/env/node/processJS.shim.ts"],
+            "#env/validate": ["./src/env/node/validate.shim.ts"]
+        }
+    },
+    "exclude": ["node_modules/**"]
+}

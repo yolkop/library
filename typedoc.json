@@ -1,0 +1,26 @@
+{
+    "customCss": "./build/typedoc/style.css",
+    "disableGit": true,
+    "disableSources": true,
+    "entryPoints": ["src/index.ts"],
+    "githubPages": false,
+    "groupOrder": [
+        "Classes",
+        "Interfaces",
+        "Enumerations",
+        "Variables",
+        "Functions",
+        "*"
+    ],
+    "includeHierarchySummary": false,
+    "navigation": {
+        "includeGroups": true
+    },
+    "out": "docs",
+    "plugin": ["typedoc-github-theme"],
+    "readme": "none",
+    "tsconfig": "./tsconfig.build.json",
+    "validation": {
+        "notDocumented": false
+    }
+}
