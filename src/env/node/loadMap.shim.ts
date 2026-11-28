@@ -10,6 +10,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
+import { getEnvVar } from '#env/env';
+
 import { fetchWithRetry } from '../../util.js';
 
 import type { MapJSON } from '../../types/Map.js';
@@ -33,7 +35,7 @@ export const loadMap = async (name: string, hash = ''): Promise<MapJSON> => {
 
     if (fs.existsSync(mapFile)) return JSON.parse(fs.readFileSync(mapFile, 'utf-8'));
 
-    const data = await (await fetchWithRetry(`https://x.yolkbot.xyz/maps/${name}.json?${hash}`)).json();
+    const data = await (await fetchWithRetry(`${getEnvVar('LOFT_URL') || 'https://x.yolkbot.xyz'}/maps/${name}.json?${hash}`)).json();
     fs.writeFileSync(mapFile, JSON.stringify(data, null, 4), { flag: 'w+' });
     return data as MapJSON;
 }
