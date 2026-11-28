@@ -171,12 +171,14 @@ export enum QueryServicesError {
     WebSocketConnectFail = 'websocket_connect_fail',
     /** You need to return a valid turnstile solution within your handler */
     NoTurnstileToken = 'no_turnstile_token',
+    /** You need to return a valid sitekey within your handler */
+    NoSiteKey = 'no_sitekey',
     /** You need a turnstile handler, as the game requires turnstile to be solved */
     TurnstileRequired = 'turnstile_required'
 }
 
 /** The turnstile handler that can be used within a {@link Bot} and {@link Account.queryServices} */
-export type TurnstileHandler = () => Promise<string>;
+export type TurnstileHandler = () => Promise<{ token: string, sitekey: string }>;
 
 /** Represents an account. Includes the VIP status, owned items, loadout, and more. */
 export class Account {
@@ -356,17 +358,22 @@ export class Account {
 
                     if (res.turnstileRequired) {
                         if (turnstileHandler) {
-                            turnstileHandler().then((token) => {
-                                if (!token) {
+                            turnstileHandler().then((r) => {
+                                if (!r?.token) {
                                     console.error('Account.queryServices: you did not provide a turnstile token, but the server requires one');
                                     return resolve(createError(QueryServicesError.NoTurnstileToken));
                                 }
 
+                                if (!r?.sitekey) {
+                                    console.error('Account.queryServices: you did not provide a sitekey, but the server requires one');
+                                    return resolve(createError(QueryServicesError.NoSiteKey));
+                                }
+
                                 ws.send(JSON.stringify({
                                     cmd: 'turnstile',
-                                    turnstileSiteKey: res.turnstileSitekey,
+                                    turnstileSiteKey: r.sitekey,
                                     platform: bot?.platform ?? 'web',
-                                    turnstileToken: token
+                                    turnstileToken: r.token
                                 }))
                             });
                         } else {

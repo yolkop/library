@@ -53,7 +53,7 @@ class DataLoader {
     static userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36';
 
     static async loadManifestData(): Promise<void> {
-        const manifest = await (await fetchWithRetry('https://x.yolkbot.xyz/manifestV2.json?v={VERSION}')).json() as Record<string, string>;
+        const manifest = await (await fetchWithRetry(`${getEnvVar('LOFT_URL') || 'https://x.yolkbot.xyz'}/manifestV2.json?v={VERSION}`)).json() as Record<string, string>;
 
         const yolkbotCache = path.join(os.homedir(), '.yolkbot');
         if (!fs.existsSync(yolkbotCache)) fs.mkdirSync(yolkbotCache, { recursive: true });

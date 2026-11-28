@@ -6,6 +6,8 @@
  * originally created by hijinks & 1ust.
  */
 
+import { getEnvVar } from '#env/env';
+
 import { fetchWithRetry, type ShapeObject } from '../../util.js';
 
 import type { Map } from '../../types/Map.js';
@@ -62,7 +64,7 @@ export let Shapes: ShapeObject = {};
 
 class DataLoader {
     static async loadData(): Promise<void> {
-        const manifest = await (await fetchWithRetry('https://x.yolkbot.xyz/manifestV2.json?v={VERSION}')).json() as Record<string, string>;
+        const manifest = await (await fetchWithRetry(`${getEnvVar('LOFT_URL') || 'https://x.yolkbot.xyz'}/manifestV2.json?v={VERSION}`)).json() as Record<string, string>;
 
         delete manifest.challenges;
 

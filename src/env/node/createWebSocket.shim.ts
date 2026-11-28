@@ -18,6 +18,10 @@ export const createWebSocket = (url: string, options: WSOptions): WSSocket => ne
     headers: {
         ...options.headers,
         'authorization': getEnvVar('SOCKET_AUTHORIZATION') ?? undefined,
+        'accept-language': 'en-US,en;q=0.9',
+        'cache-control': 'no-cache',
+        'origin': 'https://shellshock.io',
+        'pragma': 'no-cache',
         'user-agent': UserAgent
     },
     rejectUnauthorized: false
